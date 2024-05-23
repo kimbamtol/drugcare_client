@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from "next/link";
-import { NavigationMenuLink, NavigationMenuItem, NavigationMenuList, NavigationMenu } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Input from "@/components/ui/Input"; // default import로 변경
@@ -17,7 +16,7 @@ export default function SignUp() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/admin/signup', {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/signup`, {
                 email,
                 password,
                 authCode

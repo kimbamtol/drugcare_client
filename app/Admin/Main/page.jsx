@@ -36,7 +36,7 @@ export default function Component() {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `BAMeCRtrCQ_0J0myNY9PShlafJtFJT7Jw8_n1C6JJM-N2fzUnDfx04D2U9bvjXGN-V5-huBUqxpLxJtH4tjHrHA` // FCM 서버 키 
+                    'Authorization': `BAMeCRtrCQ_0J0myNY9PShlafJtFJT7Jw8_n1C6JJM-N2fzUnDfx04D2U9bvjXGN-V5-huBUqxpLxJtH4tjHrHA` // FCM 서버 키
                 }
             });
             alert('푸시 알림이 전송되었습니다.');

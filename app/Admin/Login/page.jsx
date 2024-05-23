@@ -33,7 +33,7 @@ export default function Component() {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8080/api/admin/login', { email, password, fcmToken });
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, { email, password, fcmToken });
             localStorage.setItem('token', response.data.token);
             router.push('/Admin/Main');  // MainScreen으로 리디렉션
         } catch (err) {
