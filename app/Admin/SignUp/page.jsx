@@ -16,6 +16,7 @@ export default function SignUp() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
+            console.log('Sending signup request:', { email, password, authCode }); // 디버깅 메시지 추가
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/signup`, {
                 email,
                 password,
@@ -24,11 +25,15 @@ export default function SignUp() {
             // 성공적으로 회원가입이 되면 로그인 페이지로 리디렉션
             if (response.status === 200) {
                 window.location.href = '/Admin/Login';
+            } else {
+                setError('회원가입에 실패했습니다. 다시 시도해주세요.');
             }
         } catch (err) {
+            console.error('Signup error:', err); // 디버깅 메시지 추가
             setError('회원가입에 실패했습니다. 다시 시도해주세요.');
         }
     };
+
 
     return (
         <div className="flex flex-col min-h-[100dvh]">
