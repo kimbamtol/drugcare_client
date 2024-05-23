@@ -37,3 +37,4 @@ next-env.d.ts
 
 # Firebase config
 .env.local
+public/firebase-messaging-sw.js
