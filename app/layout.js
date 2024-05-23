@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ClientSideSetup from '../components/ClientSideSetup'; // 올바른 경로로 수정
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +12,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ClientSideSetup /> {/* 클라이언트 사이드 설정 컴포넌트를 추가 */}
+        {children}
+      </body>
     </html>
   );
 }
