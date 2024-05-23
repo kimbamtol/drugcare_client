@@ -19,6 +19,7 @@ if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
     // Check if messaging is supported in the current environment
     isSupported().then((supported) => {
         if (supported) {
+            console.log('지원한다면 이 메시지가 뜬다!');
             messaging = getMessaging(app);
         } else {
             console.warn('Firebase Messaging is not supported in this environment.');
