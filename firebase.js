@@ -1,5 +1,5 @@
 // DRUGCARE_CLIENT/firebase.js
-import { initializeApp, getApps } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
@@ -16,21 +16,18 @@ let messaging;
 
 if (typeof window !== 'undefined') {
     if (!getApps().length) {
-        const app = initializeApp(firebaseConfig);
-        messaging = getMessaging(app);
+        initializeApp(firebaseConfig);
+    }
+    messaging = getMessaging(getApp());
 
-        // 서비스 워커 등록
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/firebase-messaging-sw.js')
-                .then((registration) => {
-                    console.log('Service Worker registration successful with scope:', registration.scope);
-                    messaging.useServiceWorker(registration);
-                }).catch((err) => {
-                    console.log('Service Worker registration failed:', err);
-                });
-        }
-    } else {
-        messaging = getMessaging();
+    // 서비스 워커 등록
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+            .then((registration) => {
+                console.log('Service Worker registration successful with scope:', registration.scope);
+            }).catch((err) => {
+                console.log('Service Worker registration failed:', err);
+            });
     }
 }
 
