@@ -15,26 +15,27 @@ export default function Component() {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    useEffect(() => {
-        const requestPermission = async () => {
-            try {
-                const status = await Notification.requestPermission();
-                if (status === 'granted') {
-                    const token = await getFcmToken();
-                    if (token) {
-                        setFcmToken(token);
-                    } else {
-                        setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
-                    }
+    const handleRequestPermission = async () => {
+        try {
+            const status = await Notification.requestPermission();
+            if (status === 'granted') {
+                const token = await getFcmToken();
+                if (token) {
+                    setFcmToken(token);
                 } else {
-                    setError('알림 권한이 거부되었습니다.');
+                    setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
                 }
-            } catch (err) {
-                console.error('Error fetching FCM token:', err);
-                setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
+            } else {
+                setError('알림 권한이 거부되었습니다.');
             }
-        };
-        requestPermission();
+        } catch (err) {
+            console.error('Error fetching FCM token:', err);
+            setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
+        }
+    };
+
+    useEffect(() => {
+        handleRequestPermission();
     }, []);
 
     const handleSubmit = async (e) => {
