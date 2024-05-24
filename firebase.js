@@ -31,6 +31,19 @@ if (typeof window !== 'undefined') {
                 console.log('Service Worker registration failed:', err);
             });
     }
+
+    // 포어그라운드 상태에서도 푸시 알림을 받도록 설정
+    onMessage(messaging, (payload) => {
+        console.log('Message received. ', payload);
+        // Customize notification here
+        const notificationTitle = payload.notification.title;
+        const notificationOptions = {
+            body: payload.notification.body,
+            icon: '/firebase-logo.png'
+        };
+
+        new Notification(notificationTitle, notificationOptions);
+    });
 }
 
 export const getFcmToken = async () => {
