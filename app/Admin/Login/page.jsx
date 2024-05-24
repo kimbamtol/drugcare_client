@@ -15,39 +15,32 @@ export default function Component() {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchFcmToken = async () => {
-            try {
-                const status = await Notification.requestPermission();
-                if (status === 'granted') {
-                    const token = await getFcmToken();
-                    if (token) {
-                        setFcmToken(token);
-                    } else {
-                        setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
-                    }
+    const handleRequestPermission = async () => {
+        try {
+            const status = await Notification.requestPermission();
+            if (status === 'granted') {
+                const token = await getFcmToken();
+                if (token) {
+                    setFcmToken(token);
                 } else {
-                    setError('알림 권한이 거부되었습니다.');
+                    setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
                 }
-            } catch (err) {
-                console.error('Error fetching FCM token:', err);
-                setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
+            } else {
+                setError('알림 권한이 거부되었습니다.');
             }
-        };
-
-        if (typeof window !== 'undefined') {
-            fetchFcmToken();
+        } catch (err) {
+            console.error('Error fetching FCM token:', err);
+            setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
         }
-    }, []);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (fcmToken) {
-            console.log("FCM Token 발급 생성 !" + fcmToken);
-        } else {
-            setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
+        if (!fcmToken) {
+            setError('FCM 토큰을 받아오지 못했습니다. 알림 권한을 요청해주세요.');
             return;
         }
+
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, { email, password, fcmToken });
             localStorage.setItem('token', response.data.token);
@@ -90,6 +83,7 @@ export default function Component() {
                             />
                         </div>
                         {error && <p className="text-red-500 text-center">{error}</p>}
+                        <Button type="button" className="w-full" onClick={handleRequestPermission}>알림 권한 요청</Button>
                         <Button type="submit" className="w-full">로그인</Button>
                     </form>
                     <div className="text-center text-sm">
