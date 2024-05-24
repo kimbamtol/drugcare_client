@@ -37,7 +37,7 @@ if (typeof window !== 'undefined') {
 export const getFcmToken = async () => {
     try {
         if (!messaging) throw new Error('Firebase messaging is not initialized');
-        const currentToken = await getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY' });
+        const currentToken = await getToken(messaging, { vapidKey: 'BAMeCRtrCQ_0J0myNY9PShlafJtFJT7Jw8_n1C6JJM-N2fzUnDfx04D2U9bvjXGN-V5-huBUqxpLxJtH4tjHrHA' });
         if (currentToken) {
             console.log('FCM token:', currentToken);
             return currentToken;
