@@ -1,5 +1,5 @@
 // DRUGCARE_CLIENT/firebase.js
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
@@ -11,6 +11,7 @@ const firebaseConfig = {
     appId: "1:1024950698087:web:aab9f0e4e2cd9b381e14c2",
     measurementId: "G-J5PS5H6L9R"
 };
+
 let messaging;
 
 if (typeof window !== 'undefined') {
