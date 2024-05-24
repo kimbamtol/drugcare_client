@@ -1,4 +1,3 @@
-// DRUGCARE_CLIENT/public/firebase-messaging-sw.js
 importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compat.js');
 
@@ -11,6 +10,8 @@ const firebaseConfig = {
     appId: "1:1024950698087:web:aab9f0e4e2cd9b381e14c2",
     measurementId: "G-J5PS5H6L9R"
 };
+
+firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 

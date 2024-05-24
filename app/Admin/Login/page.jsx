@@ -1,12 +1,11 @@
-'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Label } from "@/components/ui/label";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getFcmToken } from '../../../firebase';
+import { getFcmToken } from '../../../firebase'; // 올바르게 import 되어 있는지 확인
 
 export default function Component() {
     const [email, setEmail] = useState('');
@@ -15,24 +14,27 @@ export default function Component() {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    const handleRequestPermission = async () => {
-        try {
-            const status = await Notification.requestPermission();
-            if (status === 'granted') {
-                const token = await getFcmToken();
-                if (token) {
-                    setFcmToken(token);
+    useEffect(() => {
+        const requestPermission = async () => {
+            try {
+                const status = await Notification.requestPermission();
+                if (status === 'granted') {
+                    const token = await getFcmToken();
+                    if (token) {
+                        setFcmToken(token);
+                    } else {
+                        setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
+                    }
                 } else {
-                    setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
+                    setError('알림 권한이 거부되었습니다.');
                 }
-            } else {
-                setError('알림 권한이 거부되었습니다.');
+            } catch (err) {
+                console.error('Error fetching FCM token:', err);
+                setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
             }
-        } catch (err) {
-            console.error('Error fetching FCM token:', err);
-            setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
-        }
-    };
+        };
+        requestPermission();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

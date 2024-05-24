@@ -1,4 +1,3 @@
-// DRUGCARE_CLIENT/firebase.js
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
