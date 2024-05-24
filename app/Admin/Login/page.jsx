@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -35,7 +34,10 @@ export default function Component() {
                 setError('FCM 토큰을 받아오지 못했습니다. 다시 시도해주세요.');
             }
         };
-        fetchFcmToken();
+
+        if (typeof window !== 'undefined') {
+            fetchFcmToken();
+        }
     }, []);
 
     const handleSubmit = async (e) => {
