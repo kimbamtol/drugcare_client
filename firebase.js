@@ -12,13 +12,16 @@ const firebaseConfig = {
     measurementId: "G-J5PS5H6L9R"
 };
 
+let app;
 let messaging;
 
 if (typeof window !== 'undefined') {
     if (!getApps().length) {
-        initializeApp(firebaseConfig);
+        app = initializeApp(firebaseConfig);
+    } else {
+        app = getApp();
     }
-    messaging = getMessaging(getApp());
+    messaging = getMessaging(app);
 
     // 서비스 워커 등록
     if ('serviceWorker' in navigator) {
