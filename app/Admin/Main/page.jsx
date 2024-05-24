@@ -32,6 +32,8 @@ export default function Component() {
                     Authorization: `Bearer ${token}` // 요청 헤더에 인증 토큰 추가
                 }
             });
+
+            console.log('푸시 알림 전송 응답:', response.data); // 서버 응답 로깅
             alert('푸시 알림이 전송되었습니다.');
         } catch (error) {
             console.error('푸시 알림 전송 오류:', error);
