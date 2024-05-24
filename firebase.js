@@ -11,22 +11,25 @@ const firebaseConfig = {
     appId: "1:1024950698087:web:aab9f0e4e2cd9b381e14c2",
     measurementId: "G-J5PS5H6L9R"
 };
-
 let messaging;
 
 if (typeof window !== 'undefined') {
-    const app = initializeApp(firebaseConfig);
-    messaging = getMessaging(app);
+    if (!getApps().length) {
+        const app = initializeApp(firebaseConfig);
+        messaging = getMessaging(app);
 
-    // 서비스 워커 등록
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/firebase-messaging-sw.js')
-            .then((registration) => {
-                console.log('Service Worker registration successful with scope:', registration.scope);
-                messaging.useServiceWorker(registration);
-            }).catch((err) => {
-                console.log('Service Worker registration failed:', err);
-            });
+        // 서비스 워커 등록
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registration successful with scope:', registration.scope);
+                    messaging.useServiceWorker(registration);
+                }).catch((err) => {
+                    console.log('Service Worker registration failed:', err);
+                });
+        }
+    } else {
+        messaging = getMessaging();
     }
 }
 
