@@ -24,8 +24,8 @@ export default function Component() {
         try {
             const token = localStorage.getItem('token'); // 인증 토큰을 로컬 스토리지에서 가져오기
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/sendNotification`, {
-                title: '테스트 알림',
-                body: '이것은 테스트 알림입니다.',
+                title: '환자 A',
+                body: '카테고리 명 : "점심 약" 을 드시지 않았어요 !',
                 token: fcmToken
             }, {
                 headers: {
